@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f8f3ee" />
+  <title>潮汐来信 · 六级词汇双语小说</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <div>
+          <strong>潮汐来信</strong>
+          <span>Letters After the Tide</span>
+        </div>
+      </div>
+      <div class="season-card">
+        <span class="eyebrow">第一季 · 伦敦与临港</span>
+        <h2>在遗失的手稿里重逢</h2>
+        <div class="season-progress"><i id="progressBar"></i></div>
+        <small id="progressText">已读 1 / 12 章</small>
+      </div>
+      <nav class="chapter-list" id="chapterList" aria-label="章节列表"></nav>
+      <button class="library-button" id="openLibrary">
+        <span>⌕</span> 全量六级词库 <b id="libraryCount">5523</b>
+      </button>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="icon-button menu-button" id="menuButton" aria-label="打开目录">☰</button>
+        <div class="display-controls" aria-label="显示选项">
+          <span>显示</span>
+          <label><input type="checkbox" id="showEnglish" checked /><i></i>英文</label>
+          <label><input type="checkbox" id="showChinese" checked /><i></i>中文</label>
+          <label><input type="checkbox" id="showPhonetic" /><i></i>音标</label>
+        </div>
+        <div class="top-actions">
+          <button class="quiet-button" id="themeButton" title="切换夜间模式">◐</button>
+          <button class="primary-button" id="readChapter">▶ 朗读本章</button>
+        </div>
+      </header>
+
+      <section class="reader-wrap">
+        <article class="story-card">
+          <div class="chapter-heading">
+            <div>
+              <span class="eyebrow" id="chapterKicker">CHAPTER 01</span>
+              <h1 id="chapterTitle"></h1>
+              <p id="chapterSubtitle"></p>
+            </div>
+            <button class="bookmark-button" id="bookmarkButton" title="收藏本章">♡</button>
+          </div>
+
+          <div class="listen-bar">
+            <span class="listen-icon">♪</span>
+            <div>
+              <strong>沉浸朗读</strong>
+              <span id="listenHint">英文模式 · 点击句子也可单独朗读</span>
+            </div>
+            <div class="segmented" id="speechMode">
+              <button data-mode="en" class="active">仅英文</button>
+              <button data-mode="bilingual">英 + 中</button>
+            </div>
+            <button class="round-button" id="playButton" aria-label="播放">▶</button>
+          </div>
+
+          <div class="story-body" id="storyBody"></div>
+
+          <div class="chapter-nav">
+            <button id="prevChapter">← 上一章</button>
+            <span id="chapterPosition">01 / 12</span>
+            <button id="nextChapter">下一章 →</button>
+          </div>
+        </article>
+
+        <section class="vocab-card">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">CHAPTER VOCABULARY</span>
+              <h2>本章词汇表</h2>
+              <p id="vocabSummary"></p>
+            </div>
+            <div class="vocab-actions">
+              <button class="outline-button" id="toggleMeanings">隐藏释义</button>
+              <button class="primary-button" id="exportButton">⇩ 导出默写 PDF</button>
+            </div>
+          </div>
+          <div class="vocab-table-wrap">
+            <table>
+              <thead><tr><th>英文单词</th><th>音标</th><th>中文释义</th><th>朗读</th></tr></thead>
+              <tbody id="vocabTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <dialog id="exportDialog" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="关闭">×</button>
+      <span class="eyebrow">DICTATION SHEET</span>
+      <h2>导出本章默写表</h2>
+      <p>生成排版好的练习页后，在打印窗口中选择“另存为 PDF”。</p>
+      <label class="export-option">
+        <input type="radio" name="exportMode" value="en" checked />
+        <span><b>左侧英文，右侧默写中文</b><small>适合巩固词义与双向翻译</small></span>
+      </label>
+      <label class="export-option">
+        <input type="radio" name="exportMode" value="zh" />
+        <span><b>左侧中文，右侧默写英文</b><small>适合拼写强化与主动回忆</small></span>
+      </label>
+      <div class="modal-actions">
+        <button value="cancel" class="outline-button">取消</button>
+        <button type="button" class="primary-button" id="confirmExport">生成并打印</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="libraryDialog" class="library-modal">
+    <div class="library-head">
+      <div><span class="eyebrow">CET-6 LIBRARY</span><h2>全量六级词库</h2></div>
+      <button class="modal-close" id="closeLibrary" aria-label="关闭">×</button>
+    </div>
+    <div class="library-search"><span>⌕</span><input id="librarySearch" placeholder="搜索英文单词、音标或中文释义" /></div>
+    <p class="library-meta" id="libraryMeta"></p>
+    <div class="library-results" id="libraryResults"></div>
+  </dialog>
+
+  <script src="vocab-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
